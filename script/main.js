@@ -10,11 +10,11 @@ const startPauseTxt = document.querySelector('#start-pause span');
 const starPauseIcon = document.querySelector('.app__card-primary-butto-icon');
 const musicaFocoInput = document.querySelector('#alternar-musica');
 const tempoNaTela = document.querySelector('#timer');
-const musica = new Audio('/sons/luna-rise-part-one.mp3');
+const musica = new Audio('./sons/luna-rise-part-one.mp3');
 musica.loop = true;
-const somPlay = new Audio('/sons/play.wav');
-const somPause = new Audio('/sons/pause.mp3');
-const somFinal = new Audio('/sons/beep.mp3');
+const somPlay = new Audio('./sons/play.wav');
+const somPause = new Audio('./sons/pause.mp3');
+const somFinal = new Audio('./sons/beep.mp3');
 
 
 let tempoDecorridoEmSegundos = 1500;
@@ -54,7 +54,7 @@ function alterarContexto (contexto){
     })    
 
     html.setAttribute('data-contexto', contexto);
-    banner.setAttribute('src', `/imagens/${contexto}.png`);
+    banner.setAttribute('src', `./imagens/${contexto}.png`);
 
     switch (contexto) {
         case 'foco':
@@ -91,13 +91,13 @@ function iniciarOuPausar(){
     }
     intervaloId = setInterval(contagemRegressiva, 1000);
     startPauseTxt.textContent = "Pausar";
-    starPauseIcon.setAttribute('src', '/imagens/pause.png');
+    starPauseIcon.setAttribute('src', './imagens/pause.png');
     somPlay.play();    
 }
 
 function zerar(){
     startPauseTxt.textContent = "Começar";
-    starPauseIcon.setAttribute('src', '/imagens/play_arrow.png');
+    starPauseIcon.setAttribute('src', './imagens/play_arrow.png');
     clearInterval(intervaloId);
     intervaloId = null;
 }
