@@ -25,33 +25,34 @@ musicaFocoInput.addEventListener('change', ()=>{
         musica.play();
     } else {
         musica.load();
-    }
-})
+    };
+});
 
 focoBt.addEventListener('click', () =>{
-    tempoDecorridoEmSegundos = 1500;
+    //tempoDecorridoEmSegundos = 1500;
+    tempoDecorridoEmSegundos = 5;
     alterarContexto('foco');
     focoBt.classList.add('active');
-})
+});
 
 curtoBt.addEventListener('click', ()=>{
     tempoDecorridoEmSegundos = 300;
     alterarContexto('descanso-curto');
     curtoBt.classList.add('active');
-})
+});
 
 longoBt.addEventListener('click', () =>{
     tempoDecorridoEmSegundos = 900;
     alterarContexto('descanso-longo');
     longoBt.classList.add('active');
-})
+});
 
 function alterarContexto (contexto){
 
     mostrarTempo()
     botoes.forEach(function(item){
         item.classList.remove('active');    
-    })    
+    }); 
 
     html.setAttribute('data-contexto', contexto);
     banner.setAttribute('src', `./imagens/${contexto}.png`);
@@ -67,19 +68,24 @@ function alterarContexto (contexto){
             titulo.innerHTML= `Hora de voltar à superfície.<br> <strong class="app__title-strong"> Faça uma pausa longa.</strong>`;
         default:
             break;
-    }
-}
+    };
+};
 
 const contagemRegressiva = () =>{
     if(tempoDecorridoEmSegundos <= 0){
         zerar();
         somFinal.play();        
-        alert('O tempo terminou!');        
+        alert('O tempo terminou!'); 
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco';
+        if(focoAtivo){
+            const evento = new CustomEvent('FocoFinalizado');
+            document.dispatchEvent(evento);
+        };
         return;
-    }
+    };
     tempoDecorridoEmSegundos--; 
     mostrarTempo();
-}
+};
 
 startPauseBtn.addEventListener('click', iniciarOuPausar);
 
@@ -88,25 +94,25 @@ function iniciarOuPausar(){
         zerar();
         somPause.play();
         return;        
-    }
+    };
     intervaloId = setInterval(contagemRegressiva, 1000);
     startPauseTxt.textContent = "Pausar";
     starPauseIcon.setAttribute('src', './imagens/pause.png');
     somPlay.play();    
-}
+};
 
 function zerar(){
     startPauseTxt.textContent = "Começar";
     starPauseIcon.setAttribute('src', './imagens/play_arrow.png');
     clearInterval(intervaloId);
     intervaloId = null;
-}
+};
 
 function mostrarTempo(){
     const tempo = new Date(tempoDecorridoEmSegundos*1000);
     const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: '2-digit' , second:'2-digit'});
     tempoNaTela.innerHTML= `${tempoFormatado}`;
-}
+};
 
 mostrarTempo();
 
